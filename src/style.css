@@ -1,0 +1,68 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: "italic";
+  src: url("../public/fonts/AppleGaramond-Italic.ttf");
+}
+
+@font-face {
+  font-family: "regular";
+  src: url("../public/fonts/AppleRegular.ttf");
+}
+
+@font-face {
+  font-family: "light";
+  src: url("../public/fonts/light.ttf");
+}
+
+/*
+@font-face {
+  font-family: "bold";
+  src: url("../public/fonts/bold.ttf");
+}
+*/
+
+@font-face {
+  font-family: "neueMachina";
+  src: url("../public/fonts/NeueMachina-Regular.otf");
+}
+
+:root {
+  --primaryFont: "regular";
+  --secondaryFont: "light";
+  --specificFont: "italic";
+  --buttonFont: "neueMachina";
+
+  --primary-bg-color: #F5F5F5; /* Added a light background color */
+  --secondary-bg-color: #151515; /* Example secondary color */
+}
+
+
+* {
+  /* padding: 0; */
+  /* margin: 0; */
+  box-sizing: border-box;
+  /* font-family: italic; */
+  /* overflow: hidden; */
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  background-color: var(--primary-bg-color);
+  /* font-family: light; */
+  font-family: regular;
+}
+
+nav{
+  font-family: var(--buttonFont);
+}
+
+button {
+  font-family: var(--buttonFont);
+}
+
+.p4-container,.p4-second, .page5, .page6 {
+  background-color: var(--secondary-bg-color);
+}
+
