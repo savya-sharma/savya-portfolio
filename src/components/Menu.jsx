@@ -1,12 +1,12 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { FaInstagram, FaLinkedin } from 'react-icons/fa'
 
-// Replace these with your actual sound file paths (e.g., in public/sounds/)
 const menuSoundUrl = '/sounds/click.ogg';
 const closeSoundUrl = '/sounds/close.ogg';
 const hoverSoundUrl = '/sounds/hover.ogg';
 
-// Use a single hover audio element to avoid overlapping playback issues
 let hoverAudio;
 if (typeof window !== "undefined") {
     hoverAudio = new window.Audio(hoverSoundUrl);
@@ -18,9 +18,7 @@ function playSound(url) {
         try {
             hoverAudio.currentTime = 0;
             hoverAudio.play();
-        } catch (e) {
-            // ignore autoplay interruption errors gracefully
-        }
+        } catch (e) {}
     } else {
         const audio = new window.Audio(url);
         audio.currentTime = 0;
@@ -57,15 +55,11 @@ const Menu = () => {
         if (!isMenuopen) {
             playSound(menuSoundUrl);
             setisMenuopen(true);
-            // Show links after menu opens a bit (animation), so they "come from button to top"
             setTimeout(() => setShowLinks(true), OPEN_ANIMATION_DURATION);
         } else {
-            // Hide links first, then close menu
             setShowLinks(false);
             playSound(closeSoundUrl);
-            // Wait for link disappear animation, then close menu
             setTimeout(() => setisMenuopen(false), CLOSE_ANIMATION_DURATION);
-            // Optionally, restore menu-button after closing menu
         }
         if (!isMenuopen) {
             document.querySelector('.menu-button').style.display = 'none';
@@ -73,11 +67,9 @@ const Menu = () => {
     }
 
     function handleCloseClick() {
-        // Same as closing via menu button
         setShowLinks(false);
         playSound(closeSoundUrl);
         setTimeout(() => setisMenuopen(false), CLOSE_ANIMATION_DURATION);
-        // Optionally, restore menu-button after closing menu
         setTimeout(() => {
             const btn = document.querySelector('.menu-button');
             if (btn) btn.style.display = 'block';
@@ -94,7 +86,6 @@ const Menu = () => {
         navigate(path);
     }
 
-    // Show menu-button after closing is done
     React.useEffect(() => {
         if (!isMenuopen) {
             const btn = document.querySelector('.menu-button');
@@ -102,22 +93,21 @@ const Menu = () => {
         }
     }, [isMenuopen]);
 
-    // Animate links coming "from button to top". Use transitions and stagger.
     return (
         <div className='w-full flex items-center justify-between px-4 py-3'>
             <div>
-                <h1 className='text-[1.4rem] font-[light]'>SAVYASTUDIO</h1>
+                <h1 className='text-[1.4rem] font-[regular]'>SAVYA <span className='font-[thin] text-[#F45E2B]'>STUDIO</span></h1>
             </div>
 
             <div>
                 <button 
                     onClick={handleMenuClick} 
-                    className='bg-black cursor-pointer text-white w-[5rem] h-[2rem] menu-button'
+                    className='bg-black rounded-full cursor-pointer text-white w-[6rem] h-[2.5rem] menu-button'
                     aria-label="Open menu"
                 >
-                    <h1 className='absolute top-[0.8rem] right-[1.5rem] flex items-center gap-2'>
+                    <h1 className='absolute top-[1.3rem] right-[2.2rem] font-[thin] flex items-center gap-2'>
                         menu
-                        <span className='w-2 h-2 bg-white block'></span>
+                        <span className='w-2 h-2 bg-orange-600 block'></span>
                     </h1>
                 </button>
 
@@ -135,23 +125,23 @@ const Menu = () => {
                             pointerEvents: isMenuopen ? 'auto' : 'none',
                             transition: 'opacity 0.3s'
                         }}
+                        className="relative w-full h-full"
                     >
-                        <div ref={closeRef} className='text-white font-[light] absolute top-4 right-4 flex items-center gap-1'>
+                        <div ref={closeRef} className='text-white absolute top-4 right-4 flex items-center gap-1'>
                             <button 
                                 onClick={handleCloseClick} 
                                 className='flex items-center gap-1'
                                 aria-label="Close menu"
                             >
-                                <h1 className='text-[1.3rem] cursor-pointer'>close</h1>
+                                <h1 className='text-[1.3rem] cursor-pointer font-[thin]'>close</h1>
                                 <div className='bg-white rounded-full p-2 cursor-pointer'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="black" className="size-6">
-                                        <path strokeLinecap="round" strokeLinejoin="round" d="M6 18 18 6M6 6l12 12" />
-                                    </svg>
+                                    <XMarkIcon className="w-6 h-6 text-black" strokeWidth={1.5} />
                                 </div>
                             </button>
                         </div>
-                        <div className='text-white pt-[12rem] text-[3rem] px-4 font-[light]'>
-                            <ul ref={linksRef} className=''>
+
+                        <div className='text-white pt-[12rem] text-[3rem] px-4 font-[thin]'>
+                            <ul ref={linksRef}>
                                 {menuLinks.map(({ label, path }, idx) => (
                                     <li
                                         key={label}
@@ -161,7 +151,6 @@ const Menu = () => {
                                             transform: showLinks
                                                 ? 'translateY(0)'
                                                 : 'translateY(40px)',
-                                            // Stagger animation for open and close
                                             transition: `opacity 0.27s ${0.05 + idx * 0.07}s, transform 0.32s ${0.08 + idx * 0.06}s cubic-bezier(.52,1.44,.67,.82)`
                                         }}
                                     >
@@ -170,13 +159,72 @@ const Menu = () => {
                                             onClick={(e) => handleLinkClick(e, path)}
                                             onMouseEnter={handleLinkHover}
                                             onFocus={handleLinkHover}
-                                            className="text-inherit"
+                                            className="text-inherit hover:text-[#F45E2B] transition-colors duration-200"
                                         >
                                             {label}
                                         </Link>
                                     </li>
                                 ))}
                             </ul>
+                        </div>
+
+                        {/* Social and mail at bottom corners */}
+                        {/* Instagram - Bottom Left */}
+                        <div
+                            className="absolute bottom-7 right-18 transition-opacity duration-500"
+                            style={{
+                                opacity: showLinks ? 1 : 0,
+                                pointerEvents: showLinks ? 'auto' : 'none',
+                                transition: 'opacity 0.5s 0.6s'
+                            }}
+                        >
+                            <a
+                                href="https://www.instagram.com/1.savya/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="Instagram"
+                                className="text-white hover:text-[#F45E2B] transition-colors duration-200"
+                                tabIndex={showLinks ? 0 : -1}
+                            >
+                                <FaInstagram className="w-6 h-6" />
+                            </a>
+                        </div>
+                        {/* LinkedIn - Bottom Right */}
+                        <div
+                            className="absolute bottom-7 right-7 transition-opacity duration-500"
+                            style={{
+                                opacity: showLinks ? 1 : 0,
+                                pointerEvents: showLinks ? 'auto' : 'none',
+                                transition: 'opacity 0.5s 0.6s'
+                            }}
+                        >
+                            <a
+                                href="https://www.linkedin.com/in/savya-sharma-5641072a3/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label="LinkedIn"
+                                className="text-white hover:text-[#F45E2B] transition-colors duration-200"
+                                tabIndex={showLinks ? 0 : -1}
+                            >
+                                <FaLinkedin className="w-6 h-6" />
+                            </a>
+                        </div>
+                        {/* Mail - Bottom Center */}
+                        <div
+                            className="absolute bottom-6 left-4 transition-opacity duration-500 text-center"
+                            style={{
+                                opacity: showLinks ? 1 : 0,
+                                pointerEvents: showLinks ? 'auto' : 'none',
+                                transition: 'opacity 0.5s 0.6s'
+                            }}
+                        >
+                            <a
+                                href="mailto:savyasharma007@gmail.com"
+                                className="text-white hover:text-[#F45E2B] text-[1rem] font-[thin] transition-colors duration-200"
+                                tabIndex={showLinks ? 0 : -1}
+                            >
+                                mail: savyasharma007@gmail.com
+                            </a>
                         </div>
                     </div>
                 </div>

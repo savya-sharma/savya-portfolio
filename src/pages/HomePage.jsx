@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Home from '../components/Home';
@@ -9,6 +9,95 @@ import Footer from '../components/Footer';
 import Abilities from '../components/Abilities';
 
 gsap.registerPlugin(ScrollTrigger);
+
+function ContactForm() {
+  const [result, setResult] = useState("");
+  const [formState, setFormState] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+  const formRef = useRef(null);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    formData.append("access_key", "0cc9c40d-1784-493c-8a87-2ad573c166dc");
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData
+    });
+
+    const data = await response.json();
+    setResult(data.success ? "Success!" : "Error");
+    // Reset form fields after submit (if submit succeeded or failed)
+    setFormState({
+      name: "",
+      email: "",
+      message: ""
+    });
+    if (formRef.current) {
+      formRef.current.reset();
+    }
+  };
+
+  return (
+    <form
+      ref={formRef}
+      onSubmit={onSubmit}
+      className="flex flex-col gap-4 md:gap-6 max-w-xl mx-auto w-full bg-[#181818] bg-opacity-60 rounded-lg p-6 md:p-10 items-stretch mt-10"
+      autoComplete="off"
+    >
+      <input
+        type="text"
+        name="name"
+        required
+        className="bg-[#222] border border-[#333] rounded px-4 py-2 text-lg text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-[#F45E2B] transition"
+        placeholder="Your Name"
+        value={formState.name}
+        onChange={handleChange}
+        autoComplete="off"
+      />
+      <input
+        type="email"
+        name="email"
+        required
+        className="bg-[#222] border border-[#333] rounded px-4 py-2 text-lg text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-[#F45E2B] transition"
+        placeholder="Your Email"
+        value={formState.email}
+        onChange={handleChange}
+        autoComplete="off"
+      />
+      <textarea
+        name="message"
+        required
+        className="bg-[#222] border border-[#333] rounded px-4 py-3 text-lg text-white placeholder:text-gray-400 outline-none focus:ring-2 focus:ring-[#F45E2B] min-h-[130px] transition"
+        placeholder="Message"
+        value={formState.message}
+        onChange={handleChange}
+        autoComplete="off"
+      ></textarea>
+      <button
+        type="submit"
+        className="bg-[#F45E2B] text-white text-xl font-semibold py-2 px-6 rounded hover:bg-[#d44e1b] transition mt-2"
+      >
+        Submit
+      </button>
+      {result && (
+        <p className={`text-center text-lg font-medium mt-2 ${result === 'Success!' ? 'text-green-500' : 'text-red-500'}`}>{result}</p>
+      )}
+    </form>
+  );
+}
 
 const HomePage = () => {
   useEffect(() => {
@@ -49,7 +138,6 @@ const HomePage = () => {
       <Projects />
       <Abilities />
 
-
       {/* Page 4 - Testimonial */}
       <div className="page4 px-[5vw] pt-41">
         <div className="p4-container min-h-[72vh] sm:min-h-screen text-white pt-24 mt-38">
@@ -61,6 +149,9 @@ const HomePage = () => {
               </span>
             </h1>
           </div>
+
+          {/* CTA form */}
+          <ContactForm />
 
           {/* Endorsement */}
           {/* <div className="text-[1.5em] font-[light] flex justify-center pt-38">
@@ -125,4 +216,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-

@@ -14,7 +14,7 @@ const Home = () => {
                 Beautiful
               </span>
             </h1>
-            <h5 className="text-[1em] xs:text-[1.15em] sm:text-[1.3em] md:text-[1.5em] font-[light]">
+            <h5 className="text-[1em] xs:text-[1.15em] sm:text-[1.3em] md:text-[1.5em] font-[thin]">
               It is time to articulate what frontend development
               <br className="hidden xs:inline sm:inline" /> truly encompasses.
             </h5>

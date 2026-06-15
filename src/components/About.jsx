@@ -20,11 +20,12 @@ const About = () => {
         <div className="flex justify-center pt-20 sm:pt-34 w-full">
           <div className="w-full sm:w-[58%] px-1">
             <h1 className="text-2xl sm:text-5xl text-center leading-snug">
-              I'm <span className="font-[italic]">Savya,</span>a Creative
-              Developer who loves turning visual ideas into dop(spectacular)
-              things, human experiences. I'm curries by how good design inhance
-              our brand focus on what truly matters, without ever getting in the
+              I'm <span className="font-[italic]">Savya,</span> a Creative
+              Developer who loves turning visual ideas into dope (spectacular)
+              things—human experiences. I'm curious about how good design enhances
+              our ability to focus on what truly matters, without ever getting in the
               way.
+         
             </h1>
           </div>
         </div>
