@@ -37,7 +37,7 @@ function App() {
     // Loader Timeout (simulate loading)
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 1600); // adjust time if needed
+    }, 3600); // adjust time if needed
 
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
