@@ -32,12 +32,16 @@ const Home = () => {
             md:pointer-events-none mt-4 xs:mt-8 md:mt-0">
           <p
             className="text-[1.05em] xs:text-[1.18em] sm:text-[1.3em] md:text-[2.1em] para opacity-100 pointer-events-auto text-center tracking-tight max-w-[1500px] md:px-8 md:py-6">
+            Creative development is the process of transforming ideas into tangible and meaningful experiences. It combines imagination with strategic problem-solving, experimentation, and refinement to create compelling, visually captivating, and comprehensible designs that people can easily connect with and use.
+          </p>
+          {/* <p
+            className="text-[1.05em] xs:text-[1.18em] sm:text-[1.3em] md:text-[2.1em] para opacity-100 pointer-events-auto text-center tracking-tight max-w-[1500px] md:px-8 md:py-6">
             Creative development is the process of turning ideas into real designs or experiences. It blends
             imagination
             with
             problem-solving, testing, and refinement to shape concepts into something meaningful, functional, and
             visually appealing—so people can easily understand, connect with, and use the final outcome.
-          </p>
+          </p> */}
         </div>
       </div>
     </div>
