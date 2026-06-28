@@ -2,63 +2,63 @@ import React, { useRef, useState } from "react";
 
 const projectData = [
   {
-    img: "../images/projectImg1.png",
+    img: "../images/projectImg1.webp",
     title: "Zajno",
     year: "2025",
     desc: "React, Three, shader, Gsap",
     src: "https://interactive-crystal-plane.vercel.app/",
   },
   {
-    img: "../images/projectImg2.png",
+    img: "../images/projectImg2.webp",
     title: "Inertia",
     year: "2025",
     desc: "Next, Gsap",
     src: "https://inertia-iota-ashen.vercel.app/",
   },
   {
-    img: "../images/projectImg3.png",
+    img: "../images/projectImg3.webp",
     title: "Cylinder Gallery",
     year: "2025",
     desc: "React, Three, shader, Gsap",
     src: "https://cylinder-gallery.vercel.app/",
   },
   {
-    img: "../images/projectImg4.png",
+    img: "../images/projectImg4.webp",
     title: "Thirtysix Studio",
     year: "2024",
     desc: "React, Gsap, locomotive",
     src: "https://thirtysixstudio-demo.com/",
   },
   {
-    img: "../images/projectImg5.png",
+    img: "../images/projectImg5.webp",
     title: "Ochi",
     year: "2024",
     desc: "React, Gsap",
     src: "https://ochi-six-iota.vercel.app/",
   },
   {
-    img: "../images/projectImg6.png",
+    img: "../images/projectImg6.webp",
     title: "Scroll based distortion",
     year: "2026",
     desc: "React, Three, shader, Gsap",
     src: "https://scroll-based-shader-distortion.vercel.app/",
   },
   {
-    img: "../images/projectImg7.png",
+    img: "../images/projectImg7.webp",
     title: "Floating gallery",
     year: "2026",
     desc: "React, Three, shader, Gsap",
     src: "https://floating-image-gallery-jade.vercel.app/",
   },
   {
-    img: "../images/projectImg8.png",
+    img: "../images/projectImg8.webp",
     title: "Shopify addition",
     year: "2026",
     desc: "React, Three, shader, Gsap",
     src: "https://shopify-addition.vercel.app/",
   },
   {
-    img: "../images/projectImg9.png",
+    img: "../images/projectImg9.webp",
     title: "SVG transition",
     year: "2026",
     desc: "React, Gsap",
@@ -132,7 +132,7 @@ const Projects = () => {
     <div className="page3 relative w-full min-h-screen pb-32 pt-32 px-4 md:px-24">
       <div className="py-18 relative">
         <div className="w-[20vw] sm:w-[8vw] absolute top-7 sm:top-12 left-1/2 sm:left-[24%] -translate-x-1/2 sm:translate-x-0">
-          <img className="w-full" src="../images/arrow3.png" alt="" />
+          <img className="w-full" src="../images/arrow3.webp" alt="" />
         </div>
         <div className="absolute -top-7 sm:top-4 left-1/2 sm:left-[10%] -translate-x-1/2 sm:translate-x-0">
           <h1 className="bg-[#262626] px-17 py-2 sm:p-8 text-white text-[1.4em] sm:text-[2em] text-center">

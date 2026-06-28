@@ -7,7 +7,7 @@ const About = () => {
         <div className="w-[22vw] sm:w-[9vw] absolute top-1 sm:top-2 left-1/2 sm:left-[25%] -translate-x-1/2 sm:translate-x-0">
           <img
             className="object-cover w-full"
-            src="../images/arrow4.png"
+            src="../images/arrow4.webp"
             alt=""
           />
         </div>
@@ -29,7 +29,7 @@ const About = () => {
             </h1>
           </div>
         </div>
-        <div className="text-[1.1em] sm:text-[1.4em] mt-6 sm:mt-0">
+        <div className="text-[1.1em] sm:text-[1.4em] mt-6 sm:mt-0 hover:text-[#F45E2B] transition-colors duration-200">
           <Link to="/about">ABOUT</Link>
         </div>
       </div>

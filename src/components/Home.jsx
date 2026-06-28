@@ -2,7 +2,7 @@ import ThreeScene from './ThreeScene';
 
 const Home = () => {
   return (
-    <div className="page1 relative z-10">
+    <div className="page1 relative z-8">
       <div className="landing h-[120vh] sm:h-[200vh] xs:h-[130vh] flex flex-col justify-between">
         {/* Canvas and header content in a sticky container */}
         <div className="w-full h-screen sticky -z-1 top-0 left-0 flex items-center justify-center">
@@ -31,7 +31,7 @@ const Home = () => {
             md:absolute md:bottom-16 md:left-1/2 md:-translate-x-1/2 md:z-20 md:w-auto md:max-w-[950px] 
             md:pointer-events-none mt-4 xs:mt-8 md:mt-0">
           <p
-            className="text-[1.05em] xs:text-[1.18em] sm:text-[1.3em] md:text-[1.9em] para opacity-100 pointer-events-auto text-center tracking-tight max-w-[950px] md:px-8 md:py-6">
+            className="text-[1.05em] xs:text-[1.18em] sm:text-[1.3em] md:text-[2.1em] para opacity-100 pointer-events-auto text-center tracking-tight max-w-[1500px] md:px-8 md:py-6">
             Creative development is the process of turning ideas into real designs or experiences. It blends
             imagination
             with

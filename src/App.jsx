@@ -1,12 +1,12 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RouterProvider, createBrowserRouter, Outlet } from 'react-router-dom';
 import Lenis from 'lenis';
-import Navbar from './components/Navbar';
 import HomePage from './pages/HomePage';
 import About from './pages/About';
 import Play from './pages/Play';
 import Menu from './components/Menu';
 import Projects from './components/Projects';
+import Loader from './components/Loader';
 
 function RootLayout() {
   return (
@@ -31,7 +31,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
+    // Loader Timeout (simulate loading)
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1600); // adjust time if needed
+
     // Initialize Lenis smooth scroll
     const lenis = new Lenis({
       autoRaf: true,
@@ -45,13 +52,16 @@ function App() {
 
     // Cleanup
     return () => {
+      clearTimeout(timer);
       lenis.destroy();
     };
   }, []);
 
-  return (
-    <RouterProvider router={router} />
-  );
+  if (loading) {
+    return <Loader />;
+  }
+
+  return <RouterProvider router={router} />;
 }
 
 export default App;

@@ -50,6 +50,44 @@ function ContactForm() {
     }
   };
 
+  const submitRef = useRef();
+  const submitBtnRef = useRef();
+
+  useEffect(() => {
+    if(submitRef.current) {
+      const text = "Submit";
+      submitRef.current.innerHTML = text
+        .split("")
+        .map((l) => `<span style="display:inline-block">${l === " " ? "&nbsp;" : l}</span>`)
+        .join("");
+    }
+  }, []);
+
+  // Animate all "span" children of the button text on button hover
+  useEffect(() => {
+    const btn = submitBtnRef.current;
+    if (!btn) return;
+
+    const handleMouseEnter = () => {
+      if (!submitRef.current) return;
+      const spans = submitRef.current.querySelectorAll("span");
+      gsap.to(spans, {
+        scale: 1.3,
+        fontWeight: "bold",
+        duration: 0.2,
+        yoyo: true,
+        repeat: 1,
+        ease: "power1.inOut",
+        stagger: 0.08,
+      });
+    };
+
+    btn.addEventListener("mouseenter", handleMouseEnter);
+    return () => {
+      btn.removeEventListener("mouseenter", handleMouseEnter);
+    };
+  }, []);
+
   return (
     <form
       ref={formRef}
@@ -87,10 +125,11 @@ function ContactForm() {
         autoComplete="off"
       ></textarea>
       <button
+        ref={submitBtnRef}
         type="submit"
-        className="bg-[#F45E2B] text-white text-xl font-semibold py-2 px-6 rounded hover:bg-[#d44e1b] transition mt-2"
+        className="bg-[#F45E2B] text-white text-xl cursor-pointer font-semibold py-2 px-6 rounded hover:bg-[#d44e1b] transition mt-2"
       >
-        Submit
+        <span ref={submitRef}></span>
       </button>
       {result && (
         <p className={`text-center text-lg font-medium mt-2 ${result === 'Success!' ? 'text-green-500' : 'text-red-500'}`}>{result}</p>
@@ -143,11 +182,17 @@ const HomePage = () => {
         <div className="p4-container min-h-[72vh] sm:min-h-screen text-white pt-24 mt-38">
           <div className="pt-10">
             <h1 className="text-center leading-none text-[3em] xs:text-[4em] sm:text-[7em] md:text-[9em]">
+              Let's Build Something <br /> &nbsp;
+              <span className="text-[#F45E2B]">
+                Remarkable
+              </span>
+            </h1>
+            {/* <h1 className="text-center leading-none text-[3em] xs:text-[4em] sm:text-[7em] md:text-[9em]">
               Apparently, this is <br /> how I&nbsp;
               <span className="text-[#F45E2B]">
                 work!
               </span>
-            </h1>
+            </h1> */}
           </div>
 
           {/* CTA form */}

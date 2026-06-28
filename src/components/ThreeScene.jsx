@@ -2,6 +2,10 @@ import { useEffect, useRef } from 'react';
 import * as THREE from 'three';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+// Three.js postprocessing imports
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js';
 import vertex from '../shaders/vertex.glsl';
 import fragment from '../shaders/fragment.glsl';
 
@@ -16,6 +20,7 @@ const ThreeScene = () => {
   const sphereRef = useRef(null);
   const animationFrameRef = useRef(null);
   const clockRef = useRef(new THREE.Clock());
+  const composerRef = useRef(null);
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -24,8 +29,9 @@ const ThreeScene = () => {
     const renderer = new THREE.WebGLRenderer({
       canvas: canvasRef.current,
       antialias: true,
-      alpha: true
+      alpha: false // Set alpha to false so background is solid (not transparent)
     });
+    renderer.setClearColor(0xffffff, 1); // White background
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio);
     rendererRef.current = renderer;
@@ -61,6 +67,26 @@ const ThreeScene = () => {
     scene.add(sphere);
     sphereRef.current = sphere;
 
+    // --- Postprocessing setup ---
+    const renderScene = new RenderPass(scene, camera);
+
+    // UnrealBloomPass parameters: (resolution, strength, radius, threshold)
+    // You can tune the bloom settings as desired.
+    const bloomPass = new UnrealBloomPass(
+      new THREE.Vector2(window.innerWidth, window.innerHeight),
+      0.1,    // strength
+      0.1,   // radius
+      0.9    // threshold
+    );
+
+
+    
+
+    const composer = new EffectComposer(renderer);
+    composer.addPass(renderScene);
+    composer.addPass(bloomPass);
+    composerRef.current = composer;
+
     // GSAP ScrollTrigger animation
     const tl = gsap.timeline({
       scrollTrigger: {
@@ -87,21 +113,23 @@ const ThreeScene = () => {
         opacity: 1,
       });
 
-    // Animation loop
+    // Animation loop (use composer for postprocessing bloom)
     const animate = () => {
       animationFrameRef.current = requestAnimationFrame(animate);
       material.uniforms.uTime.value = clockRef.current.getElapsedTime();
-      renderer.render(scene, camera);
+      composer.render();
     };
     animate();
 
-    // Handle window resize
+    // Handle window resize (update bloom/composer size too)
     const handleResize = () => {
       const width = window.innerWidth;
       const height = window.innerHeight;
       renderer.setSize(width, height);
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
+      composer.setSize(width, height);
+      bloomPass.setSize(width, height);
     };
     window.addEventListener('resize', handleResize);
 
@@ -116,6 +144,7 @@ const ThreeScene = () => {
       geometry.dispose();
       material.dispose();
       renderer.dispose();
+      composer && composer.dispose && composer.dispose();
     };
   }, []);
 
@@ -130,4 +159,3 @@ const ThreeScene = () => {
 };
 
 export default ThreeScene;
-

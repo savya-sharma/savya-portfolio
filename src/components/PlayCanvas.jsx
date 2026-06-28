@@ -14,7 +14,7 @@ const PlayCanvas = () => {
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.z = 5;
 
-        const texture = new THREE.TextureLoader().load('/images/soon.jpg');
+        const texture = new THREE.TextureLoader().load('/images/soon.webp');
 
 
         const geometry = new THREE.PlaneGeometry(4, 5, 400, 400);

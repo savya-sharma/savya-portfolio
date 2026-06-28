@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { XMarkIcon } from '@heroicons/react/24/outline'
 import { FaInstagram, FaLinkedin } from 'react-icons/fa'
+import gsap from 'gsap';
 
 const menuSoundUrl = '/sounds/click.ogg';
 const closeSoundUrl = '/sounds/close.ogg';
@@ -39,10 +40,53 @@ const Menu = () => {
     const linksRef = useRef();
     const closeRef = useRef();
     const openRef = useRef();
+    const menuTextRef = useRef();
     const [isMenuopen, setisMenuopen] = useState(false);
     const [showLinks, setShowLinks] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
+
+    // Split 'menu' text into span letters on mount
+    useEffect(() => {
+        if (menuTextRef.current) {
+            const text = "menu";
+            menuTextRef.current.innerHTML = text
+                .split("")
+                .map(
+                    (l, idx) =>
+                        `<span style="display:inline-block">${l === " " ? "&nbsp;" : l}</span>`
+                )
+                .join("");
+        }
+    }, []);
+
+    // Menu button hover animation for letters using GSAP
+    useEffect(() => {
+        const button = document.querySelector('.menu-button');
+        if (!button) return;
+
+        // Hover animation handler
+        const handleMenuBtnHover = () => {
+            if (!menuTextRef.current) return;
+            const spans = menuTextRef.current.querySelectorAll('span');
+            gsap.to(spans, {
+                scale: 1.3,
+                fontWeight: "bold",                
+                duration: 0.20,
+                yoyo: true,
+                repeat: 1,
+                ease: "power1.inOut",
+                stagger: 0.08
+            });
+        };
+
+        button.addEventListener("mouseenter", handleMenuBtnHover);
+
+        // Clean up
+        return () => {
+            button.removeEventListener("mouseenter", handleMenuBtnHover);
+        };
+    }, []);
 
     useEffect(() => {
         setShowLinks(false);
@@ -86,6 +130,18 @@ const Menu = () => {
         navigate(path);
     }
 
+    function handleHeadingClick() {
+        if (location.pathname === '/') {
+            // already home, just close menu if open
+            if (isMenuopen) handleCloseClick();
+        } else {
+            handleCloseClick();
+            setTimeout(() => {
+                navigate('/');
+            }, CLOSE_ANIMATION_DURATION + 1); // ensure close animation
+        }
+    }
+
     React.useEffect(() => {
         if (!isMenuopen) {
             const btn = document.querySelector('.menu-button');
@@ -94,9 +150,27 @@ const Menu = () => {
     }, [isMenuopen]);
 
     return (
-        <div className='w-full flex items-center justify-between px-4 py-3'>
+        <div className='w-full fixed z-9 flex items-center justify-between px-4 py-3'>
             <div>
-                <h1 className='text-[1.4rem] font-[regular]'>SAVYA <span className='font-[thin] text-[#F45E2B]'>STUDIO</span></h1>
+                <button
+                    type="button"
+                    className="focus:outline-none"
+                    aria-label="Go home"
+                    title="Go to homepage"
+                    onClick={handleHeadingClick}
+                    style={{
+                        background: 'none',
+                        border: 'none',
+                        padding: 0,
+                        margin: 0,
+                        cursor: 'pointer'
+                    }}
+                    tabIndex={0}
+                >
+                    <h1 className='text-[1.4rem] font-[regular] text-[#F45E2B]'>
+                        SAVYA <span className='font-[thin]'>STUDIO</span>
+                    </h1>
+                </button>
             </div>
 
             <div>
@@ -106,14 +180,17 @@ const Menu = () => {
                     aria-label="Open menu"
                 >
                     <h1 className='absolute top-[1.3rem] right-[2.2rem] font-[thin] flex items-center gap-2'>
-                        menu
-                        <span className='w-2 h-2 bg-orange-600 block'></span>
+                        <span ref={menuTextRef}></span>
+                        <span
+                            className="w-2 h-2 block rounded-full bg-gradient-to-br from-[#F45E2B] to-[#FDFDFD]"
+                        ></span>
+                   
                     </h1>
                 </button>
 
                 <div
                     ref={openRef}
-                    className={`overlay absolute z-50 top-[0.7rem] right-[1rem] bg-black rounded-lg text-black transition-all duration-500 overflow-hidden`}
+                    className={`overlay absolute z-50 top-[0.7rem] right-[1rem] bg-black rounded-[1.5rem] text-black transition-all duration-500 overflow-hidden`}
                     style={{
                         width: isMenuopen ? "25rem" : "0",
                         height: isMenuopen ? "40rem" : "0",
@@ -223,7 +300,7 @@ const Menu = () => {
                                 className="text-white hover:text-[#F45E2B] text-[1rem] font-[thin] transition-colors duration-200"
                                 tabIndex={showLinks ? 0 : -1}
                             >
-                                mail: savyasharma007@gmail.com
+                                savyasharma810@gmail.com
                             </a>
                         </div>
                     </div>
