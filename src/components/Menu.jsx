@@ -190,10 +190,18 @@ const Menu = () => {
 
                 <div
                     ref={openRef}
-                    className={`overlay absolute z-50 top-[0.7rem] right-[1rem] bg-black rounded-[1.5rem] text-black transition-all duration-500 overflow-hidden`}
+                    className={`overlay absolute z-50 top-[0.7rem] right-[1rem] bg-black rounded-[1.5rem] text-black transition-all duration-500 overflow-hidden
+                        md:w-[25rem] md:h-[40rem] 
+                        w-[90vw] h-[90vh] 
+                        max-w-[25rem] max-h-[40rem]
+                    `}
                     style={{
-                        width: isMenuopen ? "25rem" : "0",
-                        height: isMenuopen ? "40rem" : "0",
+                        width: isMenuopen
+                            ? undefined // Tailwind handles both width for desktop and phone
+                            : "0",
+                        height: isMenuopen
+                            ? undefined // Tailwind handles both height for desktop and phone
+                            : "0",
                     }}
                 >
                     <div
