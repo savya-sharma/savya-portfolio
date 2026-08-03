@@ -96,7 +96,7 @@ const Abilities = () => {
         <div className="resume flex justify-center items-center pt-10">
           <a
             ref={resumeBtnRef}
-            href="https://doc-08-a8-apps-viewer.googleusercontent.com/viewer/secure/pdf/35v1bid3loa0ujkb45jgc31jdvgdrg9g/d2kmf530800a8gsl3dqmrdvmb8iq7jg5/1777626375000/drive/11059610839172634502/ACFrOgBPymXuWJtSMj5LbqgcLnuT8zQRIsbekC6fZ0jH_mQoZL0ruDVWtET1S-yCHoKyvnitSyQqQQlByZQ2G3jSXwASqk8z9erJJKgvd-L9dXgK0EKU9cgicUeVmirNePxBI4ZsiXzGEZx8IX31PCJTua4xEWYyr3_THmzpmc0Bz-VmUXWZOU0MvMtuw39aGp6_TBNJOWrVG9sXCp4H9eiSp1hozJmZliRL2kb81IMvQly20GGgCKdoc9TY0hc=?print=true&nonce=0csg5tk5osjje&user=11059610839172634502&hash=b6j46tm6vjrib64poj36fn964v7gtorv"
+            href="https://doc-08-a8-apps-viewer.googleusercontent.com/viewer/secure/pdf/35v1bid3loa0ujkb45jgc31jdvgdrg9g/94vodpq1712bofcniqp0h7ila8eo6cc4/1785749700000/drive/11059610839172634502/ACFrOgD_OmrBzE6eCr3KR6BBHcnrbrwGTuVHqIWwIaKhjXcy8X0CSTWXkKDeKgkTXV2gSwCHWM5Ol2YO4tDVFFgxnzT0etFO95hGZVINU7zFjXRhNtfEZWeZb1kwfBigziGaETms86gIzPMWrLAQrMjcj8NZYVNPWyu1cS5OUSpyTbwi1QdZmqkp1lrO9GE03cXHrMJVWtK1TayzzB6jKteoGN_xBkg7KiNAX6ml6ikPouslLRK8c8T5FLxQDCI=?authuser=0&print=true&nonce=f9kbmvmiol0f4&user=11059610839172634502&hash=iru0gg7fjjo0qptug1sra8kmcp0dvjt5"
             className="border-none flex items-center gap-3 sm:gap-5 bg-[#F45E2B] text-[1.15em] xs:text-[1.3em] sm:text-[1.5em] py-4 sm:py-5 px-5 sm:px-9 shadow-md "
           >
             <span ref={resumeRef} className="text-sm sm:text-base"></span>
