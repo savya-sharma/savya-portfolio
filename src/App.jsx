@@ -7,6 +7,7 @@ import Play from './pages/Play';
 import Menu from './components/Menu';
 import Projects from './components/Projects';
 import Loader from './components/Loader';
+import PlayCanvas from './components/PlayCanvas';
 
 function RootLayout() {
   return (
@@ -24,7 +25,7 @@ const router = createBrowserRouter([
     children: [
       { index: true, element: <HomePage /> },
       { path: 'about', element: <About /> },
-      { path: 'play', element: <Play /> },
+      { path: 'play', element: <PlayCanvas /> },
       { path: 'work', element: <Projects /> },
     ],
   },
