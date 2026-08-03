@@ -4,11 +4,12 @@ import gsap from 'gsap';
 const Loader = () => {
   const [counter, setCounter] = useState(0);
   const counterRef = useRef();
+  const fadeRef = useRef();
 
   useEffect(() => {
     const obj = { val: 0 };
-    // Small delay then animate counter using GSAP
     const tl = gsap.timeline();
+
     tl.to(obj, {
       delay: 0.5,
       val: 100,
@@ -17,17 +18,27 @@ const Loader = () => {
       onUpdate: () => {
         setCounter(Math.round(obj.val));
       }
-    });
+    })
+      // Fade out the counter when number is complete
+      .to(fadeRef.current, {
+        opacity: 0,
+        duration: 0.7,
+        ease: "power1.out",
+      }, "+=0.2");
+
     return () => {
       tl.kill();
     };
   }, []);
 
   return (
-    <div>    
+    <div>
       <div className="loader h-screen">
         <div className="loader__counter h-full flex items-center justify-center font-[brucke] font-bold text-[2rem]">
-          <span ref={counterRef}>{counter}</span>
+          <span ref={el => {
+            counterRef.current = el;
+            fadeRef.current = el;
+          }}>{counter}</span>
         </div>
       </div>
     </div>

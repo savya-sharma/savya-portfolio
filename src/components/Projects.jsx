@@ -27,7 +27,7 @@ const projectData = [
     title: "Thirtysix Studio",
     year: "2024",
     desc: "React, Gsap, locomotive",
-    src: "https://thirtysixstudio-demo.com/",
+    src: "https://thirtysixstudio-pi.vercel.app/",
   },
   {
     img: "../images/projectImg5.webp",
@@ -63,6 +63,34 @@ const projectData = [
     year: "2026",
     desc: "React, Gsap",
     src: "https://svg-page-transition.vercel.app/",
+  },
+  {
+    img: "../images/projectImg10.webp",
+    title: "Infinite Gallery",
+    year: "2026",
+    desc: "HTML, Css, Js, Gsap",
+    src: "https://infinite-scaled-slider.vercel.app/",
+  },
+  {
+    img: "../images/projectImg11.webp",
+    title: "Bloob Mixer",
+    year: "2025",
+    desc: "React, Threejs, Troika, Three Custom Sha..., Mat..... ",
+    src: "https://bloob-mixer.vercel.app/",
+  },
+  {
+    img: "../images/projectImg12.webp",
+    title: "Gooey Reveal",
+    year: "2025",
+    desc: "Vanilla.js, Gsap ",
+    src: "https://gooey-reveal.vercel.app/",
+  },
+  {
+    img: "../images/projectImg13.webp",
+    title: "Motion Transition",
+    year: "2026",
+    desc: "Vanilla.js, Css, JavaScript",
+    src: "https://motion-page-transition.vercel.app/",
   },
 ];
 
