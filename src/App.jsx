@@ -17,7 +17,7 @@ function RootLayout() {
     </div>
   );
 }
-
+ 
 const router = createBrowserRouter([
   {
     path: '/',

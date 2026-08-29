@@ -50,20 +50,20 @@ const projectData = [
     desc: "React, Three, shader, Gsap",
     src: "https://floating-image-gallery-jade.vercel.app/",
   },
-  {
-    img: "../images/projectImg8.webp",
-    title: "Shopify addition",
-    year: "2026",
-    desc: "React, Three, shader, Gsap",
-    src: "https://shopify-addition.vercel.app/",
-  },
-  {
-    img: "../images/projectImg9.webp",
-    title: "SVG transition",
-    year: "2026",
-    desc: "React, Gsap",
-    src: "https://svg-page-transition.vercel.app/",
-  },
+  // {
+  //   img: "../images/projectImg8.webp",
+  //   title: "Shopify addition",
+  //   year: "2026",
+  //   desc: "React, Three, shader, Gsap",
+  //   src: "https://shopify-addition.vercel.app/",
+  // },
+  // {
+  //   img: "../images/projectImg9.webp",
+  //   title: "SVG transition",
+  //   year: "2026",
+  //   desc: "React, Gsap",
+  //   src: "https://svg-page-transition.vercel.app/",
+  // },
   {
     img: "../images/projectImg10.webp",
     title: "Infinite Gallery",
@@ -85,13 +85,13 @@ const projectData = [
     desc: "Vanilla.js, Gsap ",
     src: "https://gooey-reveal.vercel.app/",
   },
-  {
-    img: "../images/projectImg13.webp",
-    title: "Motion Transition",
-    year: "2026",
-    desc: "Vanilla.js, Css, JavaScript",
-    src: "https://motion-page-transition.vercel.app/",
-  },
+  // {
+  //   img: "../images/projectImg13.webp",
+  //   title: "Motion Transition",
+  //   year: "2026",
+  //   desc: "Vanilla.js, Css, JavaScript",
+  //   src: "https://motion-page-transition.vercel.app/",
+  // },
 ];
 
 import gsap from "gsap";

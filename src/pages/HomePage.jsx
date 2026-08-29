@@ -10,7 +10,7 @@ import Abilities from '../components/Abilities';
 
 gsap.registerPlugin(ScrollTrigger);
 
-function ContactForm() {
+function ContactForm() {  
   const [result, setResult] = useState("");
   const [formState, setFormState] = useState({
     name: "",
