@@ -8,10 +8,12 @@ import Menu from './components/Menu';
 import Projects from './components/Projects';
 import Loader from './components/Loader';
 import PlayCanvas from './components/PlayCanvas';
+import FestivalLayer from './festivals/FestivalLayer';
 
 function RootLayout() {
   return (
     <div className="overflow-x-hidden md:overflow-x-visible">
+      <FestivalLayer />
       <Menu />
       <Outlet />
     </div>
