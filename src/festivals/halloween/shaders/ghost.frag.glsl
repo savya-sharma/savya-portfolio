@@ -4,7 +4,6 @@ varying vec2 vUv;
 uniform float uTime;
 uniform float uAspect;  // canvas height / width
 uniform float uOpacity; // fade in / out
-uniform float uStir;    // 0..1 extra turbulence from a nearby pointer
 
 const vec3 EDGE = vec3(0.56, 0.58, 0.70);
 const vec3 CORE = vec3(0.975, 0.978, 0.995);
@@ -48,7 +47,7 @@ void main() {
     vec3 q = vec3(p.x * 3.2, p.y * 1.6 - t * 0.3, t * 0.1);
     float n1 = fbm(q);
     float n2 = fbm(q * 1.5 + vec3(n1 * 1.2, 0.0, t * 0.06));
-    float turbulence = (0.8 + 0.6 * uStir) * low;
+    float turbulence = 0.8 * low;
     vec2 warped = p + vec2((n1 - 0.5) * 0.24, (n2 - 0.5) * 0.08) * turbulence;
 
     float d = ghostShape(warped);

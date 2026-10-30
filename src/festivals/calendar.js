@@ -5,8 +5,9 @@ export const FESTIVALS = [
   {
     id: 'halloween',
     // Asia/Kolkata (IST, UTC+05:30, no DST)
-    start: '2026-10-30T18:00:00+05:30',
+    start: '2026-10-30T18:10:00+05:30',
     end: '2026-11-01T00:00:00+05:30',
     load: () => import('./halloween/HalloweenLayer.jsx'),
+    loadLoader: () => import('./halloween/LoaderDecor.jsx'),
   },
 ];

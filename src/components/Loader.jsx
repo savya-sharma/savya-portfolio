@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
+import { FestivalLoaderDecor } from '../festivals/FestivalLayer';
 
 const Loader = () => {
   const [counter, setCounter] = useState(0);
@@ -33,8 +34,9 @@ const Loader = () => {
 
   return (
     <div>
-      <div className="loader h-screen">
-        <div className="loader__counter h-full flex items-center justify-center font-[brucke] font-bold text-[2rem]">
+      <div className="loader h-screen relative">
+        <FestivalLoaderDecor progress={counter} />
+        <div className="loader__counter relative h-full flex items-center justify-center font-[brucke] font-bold text-[2rem]">
           <span ref={el => {
             counterRef.current = el;
             fadeRef.current = el;

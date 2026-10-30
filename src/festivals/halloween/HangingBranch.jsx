@@ -12,23 +12,18 @@ const BAT = { x: 100, y: 58, w: 50, hangX: 19.5 };
 const HangingBranch = () => {
   const branchRef = useRef(null);
   const swingRef = useRef(null);
-  const kickRef = useRef(null);
-  const lanternRef = useRef(null);
   const batRef = useRef(null);
-  const batKickRef = useRef(null);
 
   useEffect(() => {
-    const branch = branchRef.current, swing = swingRef.current, kick = kickRef.current;
-    const lantern = lanternRef.current, bat = batRef.current, batKick = batKickRef.current;
+    const branch = branchRef.current, swing = swingRef.current, bat = batRef.current;
     const mm = gsap.matchMedia();
     // matchMedia only runs when a condition matches; `motion` and `reduce` cover every device.
     mm.add(
       {
         motion: '(prefers-reduced-motion: no-preference)',
         reduce: '(prefers-reduced-motion: reduce)',
-        finePointer: '(hover: hover) and (pointer: fine)',
       },
-      ({ conditions: { reduce, finePointer } }) => {
+      ({ conditions: { reduce } }) => {
         if (reduce) {
           gsap.set([branch, swing, bat], { opacity: 1 });
           return;
@@ -44,40 +39,6 @@ const HangingBranch = () => {
         // Ambient pendulum swing and a slower sway for the sleeping bat.
         gsap.fromTo(swing, { rotation: -3.5 }, { rotation: 3.5, duration: 2.8, ease: 'sine.inOut', yoyo: true, repeat: -1 });
         gsap.fromTo(bat, { rotation: -1.5 }, { rotation: 1.5, duration: 4.2, ease: 'sine.inOut', yoyo: true, repeat: -1 });
-
-        if (!finePointer) return;
-
-        // A nearby pointer nudges the lantern into a swing and makes the bat stir, once per approach.
-        let frame = 0, px = 0, py = 0, nearLantern = false, nearBat = false;
-        const nudge = (el, target, radius, angle, near) => {
-          const r = target.getBoundingClientRect();
-          const cx = r.left + r.width / 2;
-          const dist = Math.hypot(px - cx, py - (r.top + r.height / 2));
-          if (dist < radius && !near) {
-            // Swing away from the pointer.
-            gsap.fromTo(el, { rotation: (px < cx ? -1 : 1) * angle }, {
-              rotation: 0, duration: angle > 5 ? 2.8 : 1.6, ease: 'elastic.out(1, 0.24)', overwrite: true,
-            });
-            return true;
-          }
-          return dist < radius * 1.3 ? near : false;
-        };
-        const check = () => {
-          frame = 0;
-          nearLantern = nudge(kick, lantern, 130, 9, nearLantern);
-          nearBat = nudge(batKick, batKick, 80, 4, nearBat);
-        };
-        const onMove = (e) => {
-          px = e.clientX;
-          py = e.clientY;
-          if (!frame) frame = requestAnimationFrame(check);
-        };
-        window.addEventListener('pointermove', onMove, { passive: true });
-        return () => {
-          window.removeEventListener('pointermove', onMove);
-          cancelAnimationFrame(frame);
-          gsap.killTweensOf([kick, batKick]);
-        };
       },
     );
     return () => mm.revert();
@@ -95,16 +56,14 @@ const HangingBranch = () => {
         className="absolute"
         style={{ left: BAT.x - BAT.hangX, top: BAT.y - 5, width: BAT.w, transformOrigin: `${BAT.hangX}px 0px`, opacity: 0 }}
       >
-        <div ref={batKickRef} style={{ transformOrigin: `${BAT.hangX}px 0px` }}>
-          <img
-            src="/images/halloween/bat-hanging.png"
-            alt=""
-            draggable="false"
-            decoding="async"
-            className="block w-full h-auto select-none"
-            style={{ filter: 'drop-shadow(0 0 1px rgba(210,205,225,0.45))' }}
-          />
-        </div>
+        <img
+          src="/images/halloween/bat-hanging.png"
+          alt=""
+          draggable="false"
+          decoding="async"
+          className="block w-full h-auto select-none"
+          style={{ filter: 'drop-shadow(0 0 1px rgba(210,205,225,0.45))' }}
+        />
       </div>
 
       {/* Lantern: pivots where the rope leaves the branch. */}
@@ -113,7 +72,7 @@ const HangingBranch = () => {
         className="absolute w-0 h-0"
         style={{ left: LANTERN.x, top: LANTERN.y - 2, transformOrigin: '0px 0px', opacity: 0 }}
       >
-        <div ref={kickRef} className="w-0 h-0" style={{ transformOrigin: '0px 0px' }}>
+        <div className="w-0 h-0">
           <div
             className="absolute"
             style={{
@@ -121,7 +80,7 @@ const HangingBranch = () => {
               background: 'linear-gradient(to bottom, rgba(128,102,74,0.95), rgba(92,72,52,0.95))',
             }}
           />
-          <div ref={lanternRef} className="absolute" style={{ left: -LANTERN.hangX, top: LANTERN.rope, width: LANTERN.w }}>
+          <div className="absolute" style={{ left: -LANTERN.hangX, top: LANTERN.rope, width: LANTERN.w }}>
             {/* Warm light from the glass, flickering (CSS, see HalloweenLayer). */}
             <div
               className="hw-lantern-glow absolute rounded-full"

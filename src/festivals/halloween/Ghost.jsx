@@ -5,7 +5,6 @@ import vertex from './shaders/ghost.vert.glsl';
 import fragment from './shaders/ghost.frag.glsl';
 
 const ASPECT = 1.6; // canvas height / width, matches aspect-[5/8]
-const STIR_RADIUS = 220;
 
 // A ghost-sized WebGL canvas (not full-screen). Returns null when WebGL is unavailable.
 function createGhostRenderer(canvas) {
@@ -25,7 +24,6 @@ function createGhostRenderer(canvas) {
     uTime: { value: 0 },
     uAspect: { value: ASPECT },
     uOpacity: { value: 0 },
-    uStir: { value: 0 },
   };
   const material = new THREE.ShaderMaterial({
     vertexShader: vertex,
@@ -58,7 +56,6 @@ function createGhostRenderer(canvas) {
 const Ghost = () => {
   const wanderRef = useRef(null);
   const bobRef = useRef(null);
-  const avoidRef = useRef(null);
   const canvasHostRef = useRef(null);
   const fallbackRef = useRef(null);
   const [webgl, setWebgl] = useState(true);
@@ -89,7 +86,7 @@ const Ghost = () => {
       observer.observe(canvas);
     }
 
-    const wander = wanderRef.current, bob = bobRef.current, avoid = avoidRef.current;
+    const wander = wanderRef.current, bob = bobRef.current;
     const fallback = fallbackRef.current;
     const mm = gsap.matchMedia();
     // matchMedia only runs when a condition matches; `motion` and `reduce` cover every device.
@@ -99,9 +96,8 @@ const Ghost = () => {
         reduce: '(prefers-reduced-motion: reduce)',
         // Phones and tablets: the copy leaves no clear margin, so use the compact placement.
         mobile: '(max-width: 1023px)',
-        finePointer: '(hover: hover) and (pointer: fine)',
       },
-      ({ conditions: { reduce, mobile, finePointer } }) => {
+      ({ conditions: { reduce, mobile } }) => {
         // Drift region: the left margin, clear of centred headings, the corner webs and
         // the bat band; on desktop it stays above the fold where content cards start.
         const region = () => {
@@ -152,35 +148,8 @@ const Ghost = () => {
         };
         if (ghost) gsap.ticker.add(tick);
 
-        // Desktop only: drift slightly away from a close pointer and stir the smoke.
-        let frame = 0, px = 0, py = 0, near = false;
-        const check = () => {
-          frame = 0;
-          const r = avoid.getBoundingClientRect();
-          const dx = px - (r.left + r.width / 2), dy = py - (r.top + r.height / 2);
-          const k = 1 - Math.hypot(dx, dy) / STIR_RADIUS;
-          if (k > 0) {
-            near = true;
-            gsap.to(avoid, { x: -Math.sign(dx) * 34 * k, y: -Math.sign(dy) * 12 * k, duration: 1.2, ease: 'power2.out', overwrite: 'auto' });
-            if (ghost) gsap.to(ghost.uniforms.uStir, { value: k, duration: 0.8, ease: 'power2.out', overwrite: 'auto' });
-          } else if (near) {
-            near = false;
-            gsap.to(avoid, { x: 0, y: 0, delay: 0.6, duration: 2, ease: 'sine.inOut', overwrite: 'auto' });
-            if (ghost) gsap.to(ghost.uniforms.uStir, { value: 0, delay: 0.6, duration: 2, ease: 'sine.inOut', overwrite: 'auto' });
-          }
-        };
-        const onMove = (e) => {
-          px = e.clientX;
-          py = e.clientY;
-          if (!frame) frame = requestAnimationFrame(check);
-        };
-        if (!mobile && finePointer) window.addEventListener('pointermove', onMove, { passive: true });
-
         return () => {
           if (ghost) gsap.ticker.remove(tick);
-          window.removeEventListener('pointermove', onMove);
-          cancelAnimationFrame(frame);
-          gsap.killTweensOf([avoid, ghost ? ghost.uniforms.uStir : null].filter(Boolean));
         };
       },
     );
@@ -200,22 +169,20 @@ const Ghost = () => {
   return (
     <div ref={wanderRef} className="absolute left-0 top-0 w-[96px] lg:w-[150px]">
       <div ref={bobRef}>
-        <div ref={avoidRef}>
-          {webgl ? (
-            <div ref={canvasHostRef} />
-          ) : (
-            // Static fallback when WebGL is unavailable.
-            <img
-              ref={fallbackRef}
-              src="/images/halloween/ghost.png"
-              alt=""
-              draggable="false"
-              decoding="async"
-              className="block w-full h-auto select-none"
-              style={{ opacity: 0 }}
-            />
-          )}
-        </div>
+        {webgl ? (
+          <div ref={canvasHostRef} />
+        ) : (
+          // Static fallback when WebGL is unavailable.
+          <img
+            ref={fallbackRef}
+            src="/images/halloween/ghost.png"
+            alt=""
+            draggable="false"
+            decoding="async"
+            className="block w-full h-auto select-none"
+            style={{ opacity: 0 }}
+          />
+        )}
       </div>
     </div>
   );

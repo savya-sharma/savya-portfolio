@@ -1,13 +1,27 @@
 import { lazy, Suspense, useEffect } from 'react';
 import useActiveFestival from './useActiveFestival';
 
-// One lazy component per festival, so festival code only downloads while it is active.
+// One lazy component per festival and slot, so festival code only downloads while it is active.
+// Slots are loader functions on the festival entry: `load` (page layer), `loadLoader` (site loader).
 const lazyCache = new Map();
-function getLazyComponent(festival) {
-  if (typeof festival.load !== 'function') return null;
-  if (!lazyCache.has(festival.id)) lazyCache.set(festival.id, lazy(festival.load));
-  return lazyCache.get(festival.id);
+function getLazyComponent(festival, slot = 'load') {
+  if (typeof festival[slot] !== 'function') return null;
+  const key = `${festival.id}:${slot}`;
+  if (!lazyCache.has(key)) lazyCache.set(key, lazy(festival[slot]));
+  return lazyCache.get(key);
 }
+
+// Festival decoration for the site Loader; renders nothing when no festival is active.
+export const FestivalLoaderDecor = (props) => {
+  const festival = useActiveFestival();
+  const Component = festival && getLazyComponent(festival, 'loadLoader');
+  if (!Component) return null;
+  return (
+    <Suspense fallback={null}>
+      <Component {...props} />
+    </Suspense>
+  );
+};
 
 const FestivalLayer = () => {
   const festival = useActiveFestival();
